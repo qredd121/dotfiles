@@ -1,0 +1,90 @@
+@import "~/.local/share/tinted-theming/tinty/rofi-build-rofi-file.rasi"
+
+configuration {
+    modi: "combi,drun,run";
+    combi-modes: "drun,run";
+    show-icons: true;
+    terminal: "foot";
+}
+
+* {
+    background-color: transparent;
+    text-color: @base05;
+}
+
+window {
+    transparency: "real";
+    background-color: @base00;
+    border: 2px solid;
+    border-color: @base0D;
+    border-radius: 8px;
+    width: 600px;
+}
+
+mainbox {
+    padding: 12px;
+}
+
+inputbar {
+    background-color: @base01;
+    padding: 8px;
+    border-radius: 6px;
+    children: [ prompt, entry ];
+}
+
+prompt {
+    text-color: @base0D;
+    padding: 0 8px 0 0;
+}
+
+entry {
+    placeholder: "Search...";
+    placeholder-color: @base03;
+}
+
+listview {
+    lines: 8;
+    spacing: 4px;
+    padding: 8px 0 0 0;
+}
+
+element {
+    padding: 8px;
+    border-radius: 6px;
+}
+
+element normal.normal,
+element alternate.normal {
+    text-color: @base05;
+}
+
+element normal.active,
+element alternate.active {
+    text-color: @base0D;
+}
+
+element normal.urgent,
+element alternate.urgent {
+    text-color: @base08;
+}
+
+element selected.normal,
+element selected.active {
+    background-color: @base0D;
+    text-color: @base00;
+}
+
+element selected.urgent {
+    background-color: @base08;
+    text-color: @base00;
+}
+
+element-icon {
+    size: 1.2em;
+    padding: 0 8px 0 0;
+}
+
+element-text {
+    vertical-align: 0.5;
+    text-color: inherit;
+}

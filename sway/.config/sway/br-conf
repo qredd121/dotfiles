@@ -1,0 +1,9 @@
+input "type:keyboard" {
+    xkb_layout "us,ru"
+    xkb_options grp:alt_shift_toggle
+}
+
+output eDP-1 {
+    resolution 1920x1080@60Hz
+    position 0,0
+}

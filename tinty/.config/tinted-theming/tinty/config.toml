@@ -1,0 +1,85 @@
+shell = "bash -c '{}'"
+default-scheme = "base16-gruvbox-dark-medium"
+
+[[items]]
+name = "foot"
+path = "https://github.com/tinted-theming/tinted-terminal"
+themes-dir = "themes/foot"
+supported-systems = ["base16", "base24"]
+hook = "$HOME/.local/bin/theme-hook foot"
+
+[[items]]
+name = "tmux"
+path = "https://github.com/tinted-theming/tinted-tmux"
+themes-dir = "colors"
+supported-systems = ["base16", "base24"]
+hook = "$HOME/.local/bin/theme-hook tmux"
+
+[[items]]
+name = "zed"
+path = "https://github.com/tinted-theming/tinted-zed"
+themes-dir = "themes"
+supported-systems = ["base16", "base24"]
+hook = "$HOME/.local/bin/theme-hook zed"
+
+[[items]]
+name = "rofi"
+path = "~/.config/tinted-theming/templates/desktop"
+themes-dir = "build/rofi"
+supported-systems = ["base16", "base24"]
+
+[[items]]
+name = "waybar"
+path = "~/.config/tinted-theming/templates/desktop"
+themes-dir = "build/waybar"
+supported-systems = ["base16", "base24"]
+hook = "$HOME/.local/bin/theme-hook waybar"
+
+[[items]]
+name = "dunst"
+path = "~/.config/tinted-theming/templates/desktop"
+themes-dir = "build/dunst"
+supported-systems = ["base16", "base24"]
+hook = "$HOME/.local/bin/theme-hook dunst"
+
+[[items]]
+name = "gtk3"
+path = "~/.config/tinted-theming/templates/desktop"
+themes-dir = "build/gtk3"
+supported-systems = ["base16", "base24"]
+hook = "$HOME/.local/bin/theme-hook gtk3"
+
+[[items]]
+name = "gtk4"
+path = "~/.config/tinted-theming/templates/desktop"
+themes-dir = "build/gtk4"
+supported-systems = ["base16", "base24"]
+hook = "$HOME/.local/bin/theme-hook gtk4"
+
+[[items]]
+name = "qt6ct"
+path = "~/.config/tinted-theming/templates/desktop"
+themes-dir = "build/qt6ct"
+supported-systems = ["base16", "base24"]
+hook = "$HOME/.local/bin/theme-hook qt6ct"
+
+[[items]]
+name = "swaylock"
+path = "~/.config/tinted-theming/templates/desktop"
+themes-dir = "build/swaylock"
+supported-systems = ["base16", "base24"]
+hook = "$HOME/.local/bin/theme-hook swaylock"
+
+[[items]]
+name = "vesktop"
+path = "~/.config/tinted-theming/templates/desktop"
+themes-dir = "build/vesktop"
+supported-systems = ["base16", "base24"]
+hook = "$HOME/.local/bin/theme-hook vesktop"
+
+[[items]]
+name = "sway"
+path = "~/.config/tinted-theming/templates/desktop"
+themes-dir = "build/sway"
+supported-systems = ["base16", "base24"]
+hook = "$HOME/.local/bin/theme-hook sway"

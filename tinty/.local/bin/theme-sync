@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+PATH="$HOME/.local/bin:$PATH"
+
+data="${XDG_DATA_HOME:-$HOME/.local/share}/tinted-theming/tinty"
+templates="${XDG_CONFIG_HOME:-$HOME/.config}/tinted-theming/templates"
+
+tinty install --quiet
+
+for repo in "$data"/repos/*; do
+    [ -L "$repo" ] && continue
+    [ -d "$repo/.git" ] || continue
+    git -C "$repo" pull --ff-only --quiet
+done
+
+for t in "$templates"/*/; do
+    tinty build --quiet "$t"
+done
+
+current=$(tinty current 2>/dev/null || true)
+[ -n "$current" ] && tinty apply --quiet "$current"
+exit 0

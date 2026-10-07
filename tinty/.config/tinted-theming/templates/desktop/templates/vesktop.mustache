@@ -1,0 +1,104 @@
+@import url('https://refact0r.github.io/midnight-discord/build/midnight.css');
+
+body {
+    --font: '';
+    --code-font: '';
+    --gap: 12px;
+    --divider-thickness: 4px;
+    --border-thickness: 1px;
+    --animations: on;
+    --list-item-transition: 0.2s ease;
+    --dms-icon-svg-transition: 0.4s ease;
+    --border-hover-transition: 0.2s ease;
+    --top-bar-height: var(--gap);
+    --top-bar-button-position: titlebar;
+    --top-bar-title-position: off;
+    --subtle-top-bar-title: off;
+    --custom-window-controls: on;
+    --window-control-size: 14px;
+    --custom-dms-icon: off;
+    --dms-icon-color-before: var(--icon-subtle);
+    --dms-icon-color-after: var(--white);
+    --custom-dms-background: off;
+    --background-image: off;
+    --transparency-tweaks: off;
+    --remove-bg-layer: off;
+    --panel-blur: off;
+    --blur-amount: 12px;
+    --bg-floating: var(--bg-3);
+    --custom-chatbar: off;
+    --chatbar-height: 47px;
+    --small-user-panel: on;
+}
+
+:root {
+    --colors: on;
+
+    --text-0: #{{base00-hex}};
+    --text-1: #{{base07-hex}};
+    --text-2: #{{base06-hex}};
+    --text-3: #{{base05-hex}};
+    --text-4: #{{base04-hex}};
+    --text-5: #{{base03-hex}};
+
+    --bg-1: #{{base02-hex}};
+    --bg-2: color-mix(in srgb, #{{base01-hex}}, #{{base02-hex}});
+    --bg-3: #{{base01-hex}};
+    --bg-4: #{{base00-hex}};
+    --hover: color-mix(in srgb, #{{base05-hex}} 8%, transparent);
+    --active: color-mix(in srgb, #{{base05-hex}} 14%, transparent);
+    --active-2: color-mix(in srgb, #{{base05-hex}} 20%, transparent);
+    --message-hover: color-mix(in srgb, #{{base05-hex}} 4%, transparent);
+
+    --accent-1: #{{base0D-hex}};
+    --accent-2: #{{base0D-hex}};
+    --accent-3: #{{base0D-hex}};
+    --accent-4: color-mix(in srgb, #{{base0D-hex}} 85%, #{{base05-hex}});
+    --accent-5: color-mix(in srgb, #{{base0D-hex}} 85%, #{{base00-hex}});
+    --accent-new: var(--accent-2);
+    --mention: linear-gradient(to right, color-mix(in hsl, var(--accent-2), transparent 90%) 40%, transparent);
+    --mention-hover: linear-gradient(to right, color-mix(in hsl, var(--accent-2), transparent 95%) 40%, transparent);
+    --reply: linear-gradient(to right, color-mix(in hsl, var(--text-3), transparent 90%) 40%, transparent);
+    --reply-hover: linear-gradient(to right, color-mix(in hsl, var(--text-3), transparent 95%) 40%, transparent);
+
+    --online: #{{base0B-hex}};
+    --dnd: #{{base08-hex}};
+    --idle: #{{base0A-hex}};
+    --streaming: #{{base0E-hex}};
+    --offline: #{{base04-hex}};
+
+    --border-light: var(--hover);
+    --border: var(--active);
+    --border-hover: var(--active);
+    --button-border: color-mix(in srgb, #{{base05-hex}} 10%, transparent);
+
+    --red-1: #{{base08-hex}};
+    --red-2: #{{base08-hex}};
+    --red-3: #{{base08-hex}};
+    --red-4: color-mix(in srgb, #{{base08-hex}} 85%, #{{base00-hex}});
+    --red-5: color-mix(in srgb, #{{base08-hex}} 70%, #{{base00-hex}});
+
+    --green-1: #{{base0B-hex}};
+    --green-2: #{{base0B-hex}};
+    --green-3: #{{base0B-hex}};
+    --green-4: color-mix(in srgb, #{{base0B-hex}} 85%, #{{base00-hex}});
+    --green-5: color-mix(in srgb, #{{base0B-hex}} 70%, #{{base00-hex}});
+
+    --blue-1: #{{base0D-hex}};
+    --blue-2: #{{base0D-hex}};
+    --blue-3: #{{base0D-hex}};
+    --blue-4: color-mix(in srgb, #{{base0D-hex}} 85%, #{{base00-hex}});
+    --blue-5: color-mix(in srgb, #{{base0D-hex}} 70%, #{{base00-hex}});
+
+    --yellow-1: #{{base0A-hex}};
+    --yellow-2: #{{base0A-hex}};
+    --yellow-3: #{{base0A-hex}};
+    --yellow-4: color-mix(in srgb, #{{base0A-hex}} 85%, #{{base00-hex}});
+    --yellow-5: color-mix(in srgb, #{{base0A-hex}} 70%, #{{base00-hex}});
+
+    --purple-1: #{{base0E-hex}};
+    --purple-2: #{{base0E-hex}};
+    --purple-3: #{{base0E-hex}};
+    --purple-4: color-mix(in srgb, #{{base0E-hex}} 85%, #{{base00-hex}});
+    --purple-5: color-mix(in srgb, #{{base0E-hex}} 70%, #{{base00-hex}});
+}
