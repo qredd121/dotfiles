@@ -5,40 +5,26 @@ PATH="$HOME/.local/bin:$PATH"
 favorites="${XDG_CONFIG_HOME:-$HOME/.config}/tinted-theming/favorites"
 current=$(tinty current 2>/dev/null || true)
 
-schemes=$(tinty list --json | jq -r '
-    .[]
-    | select(.system == "base16" or .system == "base24")
-    | [.id, "\(.name)  ·  \(.variant)  ·  \(.system)"]
-    | @tsv' | sort -t $'\t' -k2,2f)
+favs=$(cat "$favorites" 2>/dev/null || true)
 
-fav_ids=()
-[ -f "$favorites" ] && mapfile -t fav_ids < <(grep -v '^[[:space:]]*$' "$favorites")
+out=$(tinty list --json | jq -r --arg cur "$current" --arg favs "$favs" '
+    ($favs | split("\n") | map(gsub("^\\s+|\\s+$"; "")) | map(select(length > 0))) as $f
+    | map(select(.system == "base16" or .system == "base24")
+          | {id, label: "\(.name)  ·  \(.variant)  ·  \(.system)"})
+    | INDEX(.id) as $by
+    | [$f[] | $by[.] | select(.)] as $favrows
+    | ($favrows + (map(select(.id as $i | $f | index($i) | not))
+                   | sort_by(.label | ascii_downcase))) as $rows
+    | "\(($rows | map(.id) | index($cur)) // 0)\t\([range($favrows | length)] | join(","))",
+      ($rows[] | "\(.label)\t\(.id)")')
 
-menu=""
-active=()
-selected=0
-row=0
-
-add() {
-    menu+="$2"$'\t'"$1"$'\n'
-    [ "$1" = "$current" ] && selected=$row
-    row=$((row + 1))
-}
-
-for id in "${fav_ids[@]}"; do
-    line=$(awk -F'\t' -v id="$id" '$1 == id { print; exit }' <<< "$schemes")
-    [ -n "$line" ] || continue
-    active+=("$row")
-    add "$id" "${line#*$'\t'}"
-done
-
-while IFS=$'\t' read -r id label; do
-    printf '%s\n' "${fav_ids[@]}" | grep -qxF "$id" && continue
-    add "$id" "$label"
-done <<< "$schemes"
+meta=${out%%$'\n'*}
+menu=${out#*$'\n'}
+selected=${meta%%$'\t'*}
+active=${meta#*$'\t'}
 
 active_arg=()
-[ ${#active[@]} -gt 0 ] && active_arg=(-a "$(IFS=,; echo "${active[*]}")")
+[ -n "$active" ] && active_arg=(-a "$active")
 
 choice=$(printf '%s' "$menu" | rofi -dmenu -i -p theme \
     -display-columns 1 -display-column-separator $'\t' \

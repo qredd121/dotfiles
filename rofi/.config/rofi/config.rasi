@@ -5,6 +5,7 @@ configuration {
     combi-modes: "drun,run";
     show-icons: true;
     terminal: "foot";
+    font: "JetBrainsMono Nerd Font 12";
 }
 
 * {
@@ -46,6 +47,8 @@ listview {
     lines: 8;
     spacing: 4px;
     padding: 8px 0 0 0;
+    border: 0;
+    scrollbar: false;
 }
 
 element {
@@ -55,16 +58,19 @@ element {
 
 element normal.normal,
 element alternate.normal {
+    background-color: transparent;
     text-color: @base05;
 }
 
 element normal.active,
 element alternate.active {
+    background-color: transparent;
     text-color: @base0D;
 }
 
 element normal.urgent,
 element alternate.urgent {
+    background-color: transparent;
     text-color: @base08;
 }
 
