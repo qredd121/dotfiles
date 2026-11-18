@@ -63,11 +63,11 @@ sed -i --follow-symlinks "s|^icon_theme=.*|icon_theme=$icons|" "$cfg/qt6ct/qt6ct
 
 foot_live "$dir/foot.ini"
 tmux has-session 2>/dev/null && tmux source-file "$dir/tmux.conf"
+pgrep -u "$USER" -x dunst > /dev/null && dunstctl reload
+pkill -USR2 -x waybar
 if pgrep -u "$USER" -x sway > /dev/null; then
     [ -n "${SWAYSOCK:-}" ] || export SWAYSOCK=$(ls "/run/user/$(id -u)"/sway-ipc.*.sock 2>/dev/null | head -n1)
     swaymsg -q reload
 fi
-pkill -USR2 -x waybar
-pgrep -u "$USER" -x dunst > /dev/null && dunstctl reload
 
 exit 0
