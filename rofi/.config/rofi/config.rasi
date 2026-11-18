@@ -1,4 +1,4 @@
-@import "~/.local/share/tinted-theming/tinty/rofi-build-rofi-file.rasi"
+@import "~/.config/theme/current/rofi.rasi"
 
 configuration {
     modi: "combi,drun,run";

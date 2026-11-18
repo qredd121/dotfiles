@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+set -u
+
+cfg="${XDG_CONFIG_HOME:-$HOME/.config}"
+themes="$cfg/theme"
+
+if [ $# -eq 0 ]; then
+    current=$(basename "$(readlink "$themes/current")")
+    for t in "$themes"/*/; do
+        t=$(basename "$t")
+        [ "$t" = current ] && continue
+        [ "$t" = "$current" ] && echo "* $t" || echo "  $t"
+    done
+    exit 0
+fi
+
+name=$1
+dir="$themes/$name"
+[ -d "$dir" ] || { echo "theme-set: no such theme: $name" >&2; exit 1; }
+
+variant=$(cat "$dir/variant" 2>/dev/null || echo dark)
+[ "$variant" = light ] || variant=dark
+
+ln -sfn "$name" "$themes/current"
+
+foot_live() {
+    local esc=$'\e' st=$'\e\\' seq="" k v rgb pid child tty
+    while IFS='=' read -r k v; do
+        v=${v%%#*}
+        v=${v//[[:space:]]/}
+        [[ $v =~ ^[0-9a-fA-F]{6}$ ]] || continue
+        rgb="rgb:${v:0:2}/${v:2:2}/${v:4:2}"
+        case $k in
+            foreground) seq+="${esc}]10;${rgb}${st}" ;;
+            background) seq+="${esc}]11;${rgb}${st}" ;;
+            regular[0-7]) seq+="${esc}]4;${k#regular};${rgb}${st}" ;;
+            bright[0-7]) seq+="${esc}]4;$((${k#bright} + 8));${rgb}${st}" ;;
+            1[6-9] | 2[01]) seq+="${esc}]4;${k};${rgb}${st}" ;;
+        esac
+    done < "$1"
+    seq+="${esc}]112${st}"
+
+    for pid in $(pgrep -u "$USER" -x foot); do
+        for child in $(pgrep -P "$pid"); do
+            tty=$(readlink "/proc/$child/fd/0" 2>/dev/null) || continue
+            [[ $tty == /dev/pts/* ]] && [ -w "$tty" ] && printf '%s' "$seq" > "$tty"
+        done
+    done
+}
+
+cat "$cfg/swaylock/base.conf" "$dir/swaylock.conf" > "$cfg/swaylock/config.tmp" &&
+    mv -f "$cfg/swaylock/config.tmp" "$cfg/swaylock/config"
+
+if [ "$variant" = dark ]; then
+    scheme=prefer-dark gtk=adw-gtk3-dark icons=Papirus-Dark
+else
+    scheme=prefer-light gtk=adw-gtk3 icons=Papirus-Light
+fi
+gsettings set org.gnome.desktop.interface color-scheme "$scheme"
+gsettings set org.gnome.desktop.interface gtk-theme "$gtk"
+gsettings set org.gnome.desktop.interface icon-theme "$icons"
+sed -i --follow-symlinks "s|^icon_theme=.*|icon_theme=$icons|" "$cfg/qt6ct/qt6ct.conf"
+
+foot_live "$dir/foot.ini"
+tmux has-session 2>/dev/null && tmux source-file "$dir/tmux.conf"
+if pgrep -u "$USER" -x sway > /dev/null; then
+    [ -n "${SWAYSOCK:-}" ] || export SWAYSOCK=$(ls "/run/user/$(id -u)"/sway-ipc.*.sock 2>/dev/null | head -n1)
+    swaymsg -q reload
+fi
+pkill -USR2 -x waybar
+pgrep -u "$USER" -x dunst > /dev/null && dunstctl reload
+
+exit 0
